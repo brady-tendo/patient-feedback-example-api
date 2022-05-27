@@ -1,0 +1,334 @@
+definitions:
+  model.Actor:
+    properties:
+      reference:
+        type: string
+    type: object
+  model.Address:
+    properties:
+      line:
+        items:
+          type: string
+        type: array
+      use:
+        type: string
+    type: object
+  model.Appointment:
+    properties:
+      actor:
+        $ref: '#/definitions/model.Actor'
+      id:
+        type: string
+      period:
+        $ref: '#/definitions/model.Period'
+      status:
+        type: string
+      subject:
+        $ref: '#/definitions/model.Subject'
+      type:
+        items:
+          $ref: '#/definitions/model.ApptType'
+        type: array
+    type: object
+  model.ApptRef:
+    properties:
+      reference:
+        type: string
+    type: object
+  model.ApptType:
+    properties:
+      text:
+        type: string
+    type: object
+  model.Code:
+    properties:
+      coding:
+        items:
+          $ref: '#/definitions/model.Coding'
+        type: array
+    type: object
+  model.Coding:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      system:
+        type: string
+    type: object
+  model.Contact:
+    properties:
+      system:
+        type: string
+      use:
+        type: string
+      value:
+        type: string
+    type: object
+  model.Diagnosis:
+    properties:
+      appointment:
+        $ref: '#/definitions/model.ApptRef'
+      code:
+        $ref: '#/definitions/model.Code'
+      id:
+        type: string
+      meta:
+        $ref: '#/definitions/model.Meta'
+      status:
+        type: string
+    type: object
+  model.Doctor:
+    properties:
+      id:
+        type: string
+      name:
+        items:
+          $ref: '#/definitions/model.Name'
+        type: array
+    type: object
+  model.Meta:
+    properties:
+      lastUpdated:
+        type: string
+    type: object
+  model.Name:
+    properties:
+      family:
+        type: string
+      given:
+        items:
+          type: string
+        type: array
+      text:
+        type: string
+    type: object
+  model.Patient:
+    properties:
+      active:
+        type: boolean
+      address:
+        items:
+          $ref: '#/definitions/model.Address'
+        type: array
+      birthDate:
+        type: string
+      contact:
+        items:
+          $ref: '#/definitions/model.Contact'
+        type: array
+      gender:
+        type: string
+      id:
+        type: string
+      name:
+        items:
+          $ref: '#/definitions/model.Name'
+        type: array
+    type: object
+  model.Period:
+    properties:
+      end:
+        type: string
+      start:
+        type: string
+    type: object
+  model.Subject:
+    properties:
+      reference:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: brady@tendo.com
+    name: Brady Lockhart
+  description: A simple API that exposes fake patient information
+  title: Patient Feedback Test API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Return the raw resource bundle used to seed API responses
+  /appointments:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Appointment'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List all appointments
+  /appointments/{id}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Appointment'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a Appointment by ID
+  /diagnoses:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Diagnosis'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List all diagnoses
+  /diagnoses/{id}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Diagnosis'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a Diagnosis by ID
+  /doctors:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Doctor'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List all doctors
+  /doctors/{id}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Doctor'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a Doctor by ID
+  /patients:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Patient'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List all patients
+  /patients/{id}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get a Patient by ID
+swagger: "2.0"

@@ -87,6 +87,11 @@ definitions:
           $ref: '#/definitions/model.Name'
         type: array
     type: object
+  model.Feedback:
+    properties:
+      feedback:
+        type: string
+    type: object
   model.Meta:
     properties:
       lastUpdated:
@@ -289,6 +294,47 @@ paths:
           schema:
             type: string
       summary: Get a Doctor by ID
+  /feedback:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Feedback'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get patient feedback
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Feedback'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Save patient feedback. Overwrites any previous feedback
   /patients:
     get:
       consumes:

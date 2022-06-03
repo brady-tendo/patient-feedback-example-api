@@ -239,6 +239,69 @@ const docTemplate = `{
                 }
             }
         },
+        "/feedback": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get patient feedback",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Feedback"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Save patient feedback. Overwrites any previous feedback",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Feedback"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/patients": {
             "get": {
                 "consumes": [
@@ -443,6 +506,14 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Feedback": {
+            "type": "object",
+            "properties": {
+                "feedback": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Meta": {
             "type": "object",
             "properties": {
@@ -531,7 +602,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8000",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Patient Body Test API",
+	Title:            "Patient Feedback Test API",
 	Description:      "A simple API that exposes fake patient information",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

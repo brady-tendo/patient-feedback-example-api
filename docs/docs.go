@@ -531,7 +531,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8000",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Patient Feedback Test API",
+	Title:            "Patient Body Test API",
 	Description:      "A simple API that exposes fake patient information",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

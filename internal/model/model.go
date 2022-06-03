@@ -5,6 +5,7 @@ type Model struct {
 	Doctors      []*Doctor
 	Appointments []*Appointment
 	Diagnoses    []*Diagnosis
+	Feedback     *Feedback
 }
 
 var globalModel *Model

@@ -14,7 +14,7 @@ import (
 
 // Swagger doc stuff:
 //
-// @title Patient Feedback Test API
+// @title Patient Body Test API
 // @version 1.0
 // @description A simple API that exposes fake patient information
 //
@@ -71,6 +71,10 @@ func StartServer() {
 	// Appointment Endpoints
 	e.GET(handler.AppointmentPath, handler.ListAppointments)
 	e.GET(handler.AppointmentPath+"/:id", handler.GetAppointment)
+
+	// Body Endpoints
+	e.GET(handler.FeedbackPath, handler.GetFeedback)
+	e.PUT(handler.FeedbackPath, handler.SaveFeedback)
 
 	// Swagger Docs
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
